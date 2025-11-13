@@ -1,9 +1,9 @@
-import Dashboard from "./Dashboard";
+import Sidebar from "./Sidebar";
 
 const page = () => {
     return (
         <div>
-            <Dashboard/>
+            <Sidebar/>
         </div>
     );
 }

@@ -1,11 +1,15 @@
-import LoginFormWrapper from "./(auth)/login/LoginFormWrapper";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-const page = () => {
-  return (
-    <div>
-      <LoginFormWrapper />
-    </div>
-  );
+export default async function HomePage() {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("token");
+
+  if (token) {
+    redirect("/dashboard");
+  } else {
+    redirect("/login");
+  }
+
+  return null;
 }
-
-export default page;

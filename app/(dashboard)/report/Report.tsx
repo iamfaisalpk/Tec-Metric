@@ -1,4 +1,4 @@
-const Sidebar = () => {
+const Report = () => {
     return (
         <div>
             Enter
@@ -6,4 +6,4 @@ const Sidebar = () => {
     );
 }
 
-export default Sidebar;
+export default Report;

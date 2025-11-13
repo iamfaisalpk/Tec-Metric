@@ -1,9 +1,9 @@
-import Dashboard from "./Dashboard";
+import Report from "./Report";
 
 const page = () => {
     return (
         <div>
-            <Dashboard/>
+            <Report/>
         </div>
     );
 }
