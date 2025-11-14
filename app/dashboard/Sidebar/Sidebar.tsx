@@ -18,11 +18,11 @@ import { useState, useEffect, useRef } from 'react';
 
 const navItems = [
     { name: 'Dashboard', path: '/dashboard', Icon: Home },
-    { name: 'Employee', path: '/employee', Icon: Users },
-    { name: 'Device', path: '/device', Icon: Monitor },
-    { name: 'Attendance', path: '/attendance', Icon: Clock },
-    { name: 'System', path: '/system', Icon: Settings },
-    { name: 'Reports', path: '/report', Icon: FileText },
+    { name: 'Employee', path: '/dashboard/employee', Icon: Users },
+    { name: 'Device', path: '/dashboard/device', Icon: Monitor },
+    { name: 'Attendance', path: '/dashboard/attendance', Icon: Clock },
+    { name: 'System', path: '/dashboard/system', Icon: Settings },
+    { name: 'Reports', path: '/dashboard/report', Icon: FileText },
 ];
 
 export default function Sidebar() {
@@ -30,26 +30,17 @@ export default function Sidebar() {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const prevPathnameRef = useRef(pathname);
 
-
-
+    // Close mobile menu on route change
     useEffect(() => {
-        if (prevPathnameRef.current !== pathname) {
-            if (isMobileOpen) {
-                setIsMobileOpen(false);
-            }
+        if (prevPathnameRef.current !== pathname && isMobileOpen) {
+            setIsMobileOpen(false);
         }
+        prevPathnameRef.current = pathname;
     }, [pathname, isMobileOpen]);
 
-    // Prevent scroll when mobile menu is open
+    // Lock scroll when mobile menu is open
     useEffect(() => {
-        if (isMobileOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
+        document.body.style.overflow = isMobileOpen ? 'hidden' : 'unset';
     }, [isMobileOpen]);
 
     return (
@@ -67,7 +58,7 @@ export default function Sidebar() {
                 )}
             </button>
 
-            {/* Overlay for mobile */}
+            {/* Mobile Overlay */}
             <AnimatePresence>
                 {isMobileOpen && (
                     <motion.div
@@ -81,7 +72,7 @@ export default function Sidebar() {
                 )}
             </AnimatePresence>
 
-            {/* Sidebar - Always visible on desktop */}
+            {/* Sidebar */}
             <aside
                 className={`
                     fixed lg:sticky top-0 h-screen z-40
@@ -113,7 +104,10 @@ export default function Sidebar() {
                 {/* Navigation */}
                 <nav className="flex-1 px-3 sm:px-4 lg:px-5 space-y-1.5 pb-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
                     {navItems.map(({ name, path, Icon }, index) => {
-                        const isActive = pathname === path;
+                        // Fixed: Highlight parent when in child route
+                        const isActive =
+                            pathname === path ||
+                            (path !== '/dashboard' && pathname.startsWith(path + '/'));
 
                         return (
                             <Link key={name} href={path}>
@@ -138,18 +132,14 @@ export default function Sidebar() {
                                     `}
                                     whileHover={{
                                         x: 4,
-                                        transition: {
-                                            type: 'spring',
-                                            stiffness: 400,
-                                            damping: 10,
-                                        },
+                                        transition: { type: 'spring', stiffness: 400, damping: 10 },
                                     }}
                                     whileTap={{ scale: 0.97 }}
                                 >
-                                    {/* Active indicator */}
+                                    {/* Fixed: Unique layoutId per route */}
                                     {isActive && (
                                         <motion.div
-                                            layoutId="activeTab"
+                                            layoutId={`sidebar-active-${path}`}
                                             className="absolute inset-0 bg-[#E3F2FF] rounded-xl sm:rounded-2xl"
                                             transition={{
                                                 type: 'spring',
@@ -169,7 +159,6 @@ export default function Sidebar() {
                         );
                     })}
                 </nav>
-
             </aside>
         </>
     );

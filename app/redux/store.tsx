@@ -5,10 +5,10 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import authReducer from './slices/authSlice';
 import dashboardReducer from './slices/dashboardSlice';
 import employeeReducer from './slices/employeeSlice'
-import branchSlice from './slices/branchSlice'
 import departmentSlice from './slices/departmentSlice'
 import positionSlice from './slices/positionSlice'
 import documentTypeSlice from './slices/documentTypeSlice'
+import branchSlice from './slices/branchSlice'
 
 
 export const store = configureStore({
@@ -16,10 +16,10 @@ export const store = configureStore({
         auth: authReducer,
         dashboard: dashboardReducer,
         employee: employeeReducer,
-        branch : branchSlice,
-        department : departmentSlice,
-        position : positionSlice,
-        document : documentTypeSlice,
+        branch: branchSlice,
+        department: departmentSlice,
+        position: positionSlice,
+        document: documentTypeSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

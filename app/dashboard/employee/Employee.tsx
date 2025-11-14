@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const tabs = [
-    { name: "Branch", href: "/employee/branch" },
-    { name: "Department", href: "/employee/department" },
-    { name: "Position", href: "/employee/position" },
-    { name: "Document Type", href: "/employee/documenttype" },
-    { name: "Employee", href: "/employee/list" }
+    { name: "Branch", href: "/dashboard/employee" },
+    { name: "Department", href: "/dashboard/employee/department" },
+    { name: "Position", href: "/dashboard/employee/position" },
+    { name: "Document Type", href: "/dashboard/employee/documenttype" },
+    { name: "Employee", href: "/dashboard/employee/list" }
 ];
 
 const Employee = () => {
@@ -41,3 +41,4 @@ const Employee = () => {
 };
 
 export default Employee;
+
