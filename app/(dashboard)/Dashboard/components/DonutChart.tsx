@@ -21,7 +21,6 @@ export const DonutChart = ({
 
     const totalValue = data.reduce((s, i) => s + i.value, 0);
 
-    // Precompute start/end angles for each segment
     const segments = data.reduce<{ startAngle: number; endAngle: number; item: DonutItem }[]>(
         (acc, item) => {
             const pct = (item.value / totalValue) * 100;

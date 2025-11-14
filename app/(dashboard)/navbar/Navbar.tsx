@@ -21,14 +21,14 @@ export default function Navbar() {
     // Map pathname to titles
     const titleMap: Record<string, string> = {
         '/dashboard': 'Analytics',
-        '/employee': 'Employee',
-        '/device': 'Device',
-        '/attendance': 'Attendance',
-        '/system': 'System',
-        '/report': 'Reports',
+        // '/employee': 'Employee',
+        // '/device': 'Device',
+        // '/attendance': 'Attendance',
+        // '/system': 'System',
+        // '/report': 'Reports',
     };
 
-    const title = titleMap[pathname] || 'Dashboard';
+    const title = titleMap[pathname] ;
 
     return (
         <motion.nav
@@ -46,7 +46,7 @@ export default function Navbar() {
                 <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
                     aria-label="Settings"
                 >
                     <Settings className="w-6 h-6 text-gray-600" strokeWidth={2} />
@@ -56,7 +56,7 @@ export default function Navbar() {
                 <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
+                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative cursor-pointer"
                     aria-label="Notifications"
                 >
                     <Bell className="w-6 h-6 text-gray-600" strokeWidth={2} />
