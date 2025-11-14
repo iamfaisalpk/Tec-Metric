@@ -32,7 +32,7 @@ export default function Navbar() {
 
     return (
         <motion.nav
-            className="bg-background px-8 py-5 flex justify-between items-center border-b border-gray-100"
+            className="bg-background px-8 py-5 flex justify-between items-center"
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}

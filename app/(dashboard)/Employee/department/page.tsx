@@ -1,9 +1,7 @@
-import Branch from "./branch/branch";
-
 const page = () => {
     return (
         <div>
-            <Branch/>
+            Department
         </div>
     );
 }

@@ -9,8 +9,6 @@ const axiosInstance = axios.create({
 // Request interceptor to add Authorization header if token exists
 axiosInstance.interceptors.request.use(
     (config) => {
-        // Note: Since token is in HttpOnly cookie, we don't need to manually add it
-        // The browser will automatically send the cookie with requests
         return config;
     },
     (error) => {
