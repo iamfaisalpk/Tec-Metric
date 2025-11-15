@@ -1,7 +1,9 @@
+import DepartmentPage from "./department";
+
 const page = () => {
     return (
         <div>
-            Department
+            <DepartmentPage/>
         </div>
     );
 }

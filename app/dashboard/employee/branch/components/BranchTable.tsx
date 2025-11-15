@@ -37,7 +37,7 @@ const BranchTable: React.FC<BranchTableProps> = ({
     return (
         <div className="relative">
             {/* Add Branch Button - Top Right Corner */}
-            <div className="flex flex-col items-end">
+            <div className="flex flex-col items-end mb-3">
                 <div className="flex flex-col items-center">
                     <button
                         onClick={onAdd}

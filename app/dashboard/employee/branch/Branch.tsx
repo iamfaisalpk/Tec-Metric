@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { useBranchCRUD } from './hooks/useBranchCRUD';
 import BranchTable from './components/BranchTable';
 import BranchForm from './components/BranchForm';
-import DeleteModal from '../components/DeleteModal';
+import DeleteModal from '../../common/components/DeleteModal';
 
 export default function Branch() {
     const {
