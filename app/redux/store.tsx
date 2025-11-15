@@ -19,7 +19,7 @@ export const store = configureStore({
         branch: branchSlice,
         department: departmentSlice,
         position: positionSlice,
-        document: documentTypeSlice,
+        documentType: documentTypeSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

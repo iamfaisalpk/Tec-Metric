@@ -1,7 +1,10 @@
+import DocumentType from "./DocumentType";
+
+
 const page = () => {
     return (
         <div>
-            Document Type 
+            <DocumentType/>
         </div>
     );
 }

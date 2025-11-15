@@ -138,12 +138,10 @@ const BranchTable: React.FC<BranchTableProps> = ({
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: idx * 0.05 }}
-                                        whileHover={{
-                                            backgroundColor: 'rgba(211, 226, 255, 0.1)',
-                                            x: 4
-                                        }}
-                                        className="border-b border-gray-100 transition-all"
+                                        whileHover={{ x: 4 }}
+                                        className="border-b border-gray-100 hover:bg-blue-50/40 transition-colors"
                                     >
+
                                         <td className="px-4 py-4 text-text font-medium">
                                             {String(idx + 1 + (pagination.page - 1) * pagination.limit).padStart(2, '0')}
                                         </td>
