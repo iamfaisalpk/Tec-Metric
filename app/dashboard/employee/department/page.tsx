@@ -1,4 +1,4 @@
-import DepartmentPage from "./department";
+import DepartmentPage from "./Department";
 
 const page = () => {
     return (
