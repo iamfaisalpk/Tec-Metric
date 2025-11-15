@@ -1,7 +1,9 @@
+import PositionPage from "./Position";
+
 const page = () => {
     return (
         <div>
-            Position
+            <PositionPage/>
         </div>
     );
 }
