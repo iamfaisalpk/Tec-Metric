@@ -5,16 +5,7 @@ import { motion } from 'framer-motion';
 import { Search, Building2 } from 'lucide-react';
 import BranchActions from './BranchActions';
 
-interface Branch {
-    _id: string;
-    name: string;
-    code: string;
-    phone: string;
-    state: string;
-    city: string;
-    createdAt: string;
-    updatedAt: string;
-}
+import { Branch } from '../hooks/useBranchCRUD';
 
 interface BranchTableProps {
     branches: Branch[];
@@ -177,7 +168,7 @@ const BranchTable: React.FC<BranchTableProps> = ({
                                             {new Date(branch.createdAt).toLocaleDateString('en-GB')}
                                         </td>
                                         <td className="px-4 py-4 text-gray-600">
-                                            {new Date(branch.updatedAt).toLocaleDateString('en-GB')}
+                                            {branch.updatedAt ? new Date(branch.updatedAt).toLocaleDateString('en-GB') : 'N/A'}
                                         </td>
                                         <td className="px-4 py-4">
                                             <BranchActions branch={branch} onEdit={onEdit} onDelete={onDelete} />

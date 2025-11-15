@@ -5,9 +5,17 @@ interface Branch {
     _id: string;
     name: string;
     code: string;
-    location: string;
-    status: 'active' | 'inactive';
+    location?: string;
+    phone?: string;
+    state?: string;
+    city?: string;
+    address?: string;
+    country?: string;
+    superior?: string;
+    logo?: string;
+    status?: 'active' | 'inactive';
     createdAt: string;
+    updatedAt?: string;
 }
 
 interface Pagination {

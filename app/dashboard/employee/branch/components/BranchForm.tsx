@@ -4,45 +4,63 @@ import { motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import { Upload } from 'lucide-react';
 
-interface Branch {
-    _id: string;
-    name: string;
-    code: string;
-    phone: string;
-    state: string;
-    city: string;
-    address: string;
-    country?: string;
-    superior?: string;
-    logo?: string;
-    createdAt: string;
-    updatedAt: string;
-}
+import { Branch } from '../hooks/useBranchCRUD';
 
 interface BranchFormProps {
     mode: 'create' | 'edit';
     initialData?: Branch;
-    onSubmit: (data: Partial<Branch>) => void;
+    onSubmit: (data: Omit<Branch, '_id' | 'createdAt'>) => void;
     onCancel: () => void;
 }
 
 const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSubmit, onCancel }) => {
-    const [formData, setFormData] = useState<Partial<Branch>>(
-        initialData || {
+    const [formData, setFormData] = useState<Omit<Branch, '_id' | 'createdAt'>>(
+        initialData ? {
+            name: initialData.name,
+            code: initialData.code,
+            location: initialData.location,
+            phone: initialData.phone,
+            state: initialData.state,
+            city: initialData.city,
+            address: initialData.address,
+            country: initialData.country,
+            superior: initialData.superior,
+            logo: initialData.logo,
+            status: initialData.status,
+            updatedAt: initialData.updatedAt,
+        } : {
             name: '',
             code: '',
-            address: '',
-            country: '',
+            location: '',
+            phone: '',
             state: '',
             city: '',
+            address: '',
+            country: '',
             superior: '',
-            phone: '',
             logo: '',
+            status: 'active' as const,
+            updatedAt: undefined,
         }
     );
 
     useEffect(() => {
-        if (mode === 'edit' && initialData) setFormData(initialData);
+        if (mode === 'edit' && initialData) {
+            setFormData({
+                name: initialData.name,
+                code: initialData.code,
+                location: initialData.location,
+                phone: initialData.phone,
+                state: initialData.state,
+                city: initialData.city,
+                address: initialData.address,
+                country: initialData.country,
+                superior: initialData.superior,
+                logo: initialData.logo,
+                status: initialData.status,
+                updatedAt: initialData.updatedAt,
+            });
+        }
     }, [mode, initialData]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

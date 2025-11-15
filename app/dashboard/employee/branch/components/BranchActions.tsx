@@ -3,16 +3,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-interface Branch {
-    _id: string;
-    name: string;
-    code: string;
-    phone: string;
-    state: string;
-    city: string;
-    createdAt: string;
-    updatedAt: string;
-}
+import { Branch } from '../hooks/useBranchCRUD';
 
 interface BranchActionsProps {
     branch: Branch;
