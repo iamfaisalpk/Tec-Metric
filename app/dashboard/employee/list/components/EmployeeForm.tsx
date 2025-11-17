@@ -27,40 +27,40 @@ const validatePhone = (value: string) => {
 };
 
 const schema = z.object({
-    employeeId: z.string().min(1, 'Employee ID is required'),
-    firstName: z.string().min(1, 'First name is required'),
-    lastName: z.string().min(1, 'Last name is required'),
-    gender: z.string().min(1, 'Gender is required'),
-    dateOfBirth: z.string().min(1, 'Date of birth is required'),
+    employeeId: z.string().min(1, 'Employee ID'),
+    firstName: z.string().min(1, 'First name'),
+    lastName: z.string().min(1, 'Last name'),
+    gender: z.string().min(1, 'Gender'),
+    dateOfBirth: z.string().min(1, 'Date of birth'),
     phone: z.string().refine(validatePhone, 'Invalid phone number'),
     phoneOptional: z.string().optional().refine((v) => !v || validatePhone(v), 'Invalid phone number'),
     email: z.string().email('Invalid email address'),
-    nationality: z.string().min(1, 'Nationality is required'),
-    fatherName: z.string().min(1, "Father's name is required"),
-    motherName: z.string().min(1, "Mother's name is required"),
-    qualification: z.string().min(1, 'Qualification is required'),
-    fieldOfStudy: z.string().min(1, 'Field of study is required'),
-    maritalStatus: z.string().min(1, 'Marital status is required'),
-    residentialAddress: z.string().min(1, 'Residential address is required'),
-    branch: z.string().min(1, 'Branch is required'),
-    department: z.string().min(1, 'Department is required'),
-    position: z.string().min(1, 'Position is required'),
-    superior: z.string().min(1, 'Superior is required'),
-    dateOfJoin: z.string().min(1, 'Date of join is required'),
-    salary: z.string().min(1, 'Salary is required'),
-    verifyMode: z.string().min(1, 'Verify mode is required'),
+    nationality: z.string().min(1, 'Nationality'),
+    fatherName: z.string().min(1, "Father's name"),
+    motherName: z.string().min(1, "Mother's name"),
+    qualification: z.string().min(1, 'Qualification'),
+    fieldOfStudy: z.string().min(1, 'Field of study'),
+    maritalStatus: z.string().min(1, 'Marital status'),
+    residentialAddress: z.string().min(1, 'Residential address'),
+    branch: z.string().min(1, 'Branch'),
+    department: z.string().min(1, 'Department'),
+    position: z.string().min(1, 'Position'),
+    superior: z.string().min(1, 'Superior'),
+    dateOfJoin: z.string().min(1, 'Date of join'),
+    salary: z.string().min(1, 'Salary'),
+    verifyMode: z.string().min(1, 'Verify mode'),
     cardNo: z.string().optional(),
     enrollDevice: z.string().optional(),
     plmQty: z.string().optional(),
-    devicePrivilege: z.string().min(1, 'Device privilege is required'),
+    devicePrivilege: z.string().min(1, 'Device privilege'),
     pin: z.string().optional(),
     fpQty: z.string().optional(),
     faceQty: z.string().optional(),
     documents: z.array(
         z.object({
-            name: z.string().min(1, 'Document name is required'),
+            name: z.string().min(1, 'Document name'),
             file: z.instanceof(File).nullable().optional(),
-            type: z.string().min(1, 'Document type is required'),
+            type: z.string().min(1, 'Document type'),
         })
     ).optional(),
 });
@@ -194,7 +194,7 @@ const EmployeeForm: FC<EmployeeFormProps> = ({
                                         key={i}
                                         type="button"
                                         onClick={() => setActiveTab(i)}
-                                        className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === i
+                                        className={`flex items-center cursor-pointer gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === i
                                                 ? 'bg-primary text-white shadow-md'
                                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                             }`}
@@ -205,7 +205,7 @@ const EmployeeForm: FC<EmployeeFormProps> = ({
                                 );
                             })}
                         </div>
-                        <button type="button" onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full">
+                        <button type="button" onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full cursor-pointer">
                             <X className="w-5 h-5 text-gray-500" />
                         </button>
                     </div>
@@ -228,7 +228,7 @@ const EmployeeForm: FC<EmployeeFormProps> = ({
                                 type="button"
                                 onClick={goBack}
                                 disabled={activeTab === 0}
-                                className="px-6 py-2 bg-primary text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition"
+                                className="px-6 py-2 cursor-pointer bg-primary text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition"
                             >
                                 Back
                             </button>
@@ -236,14 +236,14 @@ const EmployeeForm: FC<EmployeeFormProps> = ({
                                 <button
                                     type="button"
                                     onClick={goNext}
-                                    className="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition"
+                                    className="px-6 py-2 cursor-pointer bg-primary text-white rounded-full hover:bg-primary/90 transition"
                                 >
                                     Next
                                 </button>
                             ) : (
                                 <button
                                     type="submit"
-                                    className="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition"
+                                    className="px-6 py-2 bg-primary cursor-pointer text-white rounded-full hover:bg-primary/90 transition"
                                 >
                                     {isEdit ? 'Update' : 'Add'}
                                 </button>

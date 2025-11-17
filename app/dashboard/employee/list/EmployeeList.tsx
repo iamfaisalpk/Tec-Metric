@@ -136,13 +136,14 @@ export default function EmployeeList() {
                 onFilterChange={handleFilterChange}
                 onClearFilters={handleClearFilters}
                 onSearch={handleSearch}
+                onAdd={openCreateModal}
             />
 
             <EmployeeTable
                 employees={employees}
                 loading={loading}
                 pagination={pagination}
-                onAdd={openCreateModal}
+                // onAdd={openCreateModal}
                 onEdit={openEditModal}
                 onView={handleView}
                 onDelete={openDeleteModal}

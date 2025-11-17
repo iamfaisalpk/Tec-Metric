@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, X } from 'lucide-react';
 import CommonSelect from '../../../common/components/CommonSelect';
+import EmployeeActions from './EmployeeActions';
 
 interface EmployeeFiltersProps {
     filters: {
@@ -16,6 +17,7 @@ interface EmployeeFiltersProps {
     onFilterChange: (filters: Partial<EmployeeFiltersProps['filters']>) => void;
     onClearFilters: () => void;
     onSearch: (search: string) => void;
+    onAdd: () => void;
 }
 
 const EmployeeFilters: React.FC<EmployeeFiltersProps> = ({
@@ -24,6 +26,7 @@ const EmployeeFilters: React.FC<EmployeeFiltersProps> = ({
     onFilterChange,
     onClearFilters,
     onSearch,
+    onAdd,
 }) => {
     // Mock options - in real app, these would come from API
     const branchOptions = [
@@ -53,11 +56,14 @@ const EmployeeFilters: React.FC<EmployeeFiltersProps> = ({
     ];
 
     return (
+        <>
+        <EmployeeActions onAdd={onAdd} />
         <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-2xl shadow-lg border-2 border-primary/20 p-6 mb-6"
         >
+            
             {/* Filters Row */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                 <motion.div
@@ -145,13 +151,14 @@ const EmployeeFilters: React.FC<EmployeeFiltersProps> = ({
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={onClearFilters}
-                    className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors flex items-center gap-2 font-medium"
+                    className="px-6 py-3  cursor-pointer bg-accent text-black rounded-xl hover:bg-primary hover:text-white transition-colors flex items-center gap-2 font-medium"
                 >
                     <X className="w-4 h-4" />
                     Reset Filters
                 </motion.button>
             </div>
         </motion.div>
+        </>
     );
 };
 

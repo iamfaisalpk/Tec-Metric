@@ -3,14 +3,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { PencilIcon, TrashIcon, EyeIcon } from '@heroicons/react/24/outline';
-import EmployeeActions from './EmployeeActions';
+// import EmployeeActions from './EmployeeActions';
 import { Employee } from '../hooks/useEmployeeCRUD';
 
 interface EmployeeTableProps {
     employees: Employee[];
     loading: boolean;
     pagination: { page: number; limit: number; total: number };
-    onAdd: () => void;
+    // onAdd: () => void;
     onEdit: (employee: Employee) => void;
     onView: (employee: Employee) => void;
     onDelete: (employee: Employee) => void;
@@ -22,7 +22,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
     employees,
     loading,
     pagination,
-    onAdd,
+    // onAdd,
     onEdit,
     onView,
     onDelete,
@@ -34,7 +34,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
     return (
         <div className="relative">
             {/* Add Employee Button - Top Right Corner */}
-            <EmployeeActions onAdd={onAdd} />
+            {/* <EmployeeActions onAdd={onAdd} /> */}
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
