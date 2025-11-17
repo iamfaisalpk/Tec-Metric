@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect,  useCallback } from 'react';
-import { X, Plus, FileText, } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { X, Plus, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form'; // ← useWatch added
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import CommonSelect from '../../../common/components/CommonSelect';
@@ -11,7 +11,14 @@ import CommonSelect from '../../../common/components/CommonSelect';
 const schema = z.object({
     branch: z.string().min(1, 'Branch is required'),
     department: z.string().min(1, 'Department is required'),
-    documentTypes: z.array(z.string().min(2, 'Document type must be at least 2 characters').max(50, 'Document type must be at most 50 characters')).min(1, 'At least one document type is required'),
+    documentTypes: z
+        .array(
+            z
+                .string()
+                .min(2, 'Document type must be at least 2 characters')
+                .max(50, 'Document type must be at most 50 characters')
+        )
+        .min(1, 'At least one document type is required'),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -35,7 +42,13 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
     const [departments, setDepartments] = useState<{ value: string; label: string }[]>([]);
     const [selectedBranch, setSelectedBranch] = useState<string>('');
 
-    const { control, handleSubmit, formState: { errors }, watch, setValue, reset } = useForm<FormData>({
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+        setValue,
+        reset,
+    } = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: {
             branch: '',
@@ -44,11 +57,17 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
         },
     });
 
-    const watchedDocumentTypes = watch('documentTypes');
+    // useWatch is safe with React Compiler — reference is stable when value unchanged
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const watchedDocumentTypes =
+        useWatch({
+            control,
+            name: 'documentTypes',
+        }) ?? [];
 
     // Fetch branches on mount
     useEffect(() => {
-        // Mock data - replace with actual API call
+        // Replace with real API call when ready
         setBranches([
             { value: 'branch1', label: 'Restaurant Dubai' },
             { value: 'branch2', label: 'Restaurant Abu Dhabi' },
@@ -59,7 +78,7 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
     // Fetch departments when branch changes
     useEffect(() => {
         if (selectedBranch) {
-            // Mock data - replace with actual API call
+            // Replace with real API call when ready
             setDepartments([
                 { value: 'dept1', label: 'Operations' },
                 { value: 'dept2', label: 'HR' },
@@ -70,14 +89,14 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
         }
     }, [selectedBranch]);
 
-    // Reset form on open
+    // Reset form when modal opens/closes or edit mode changes
     useEffect(() => {
         if (isOpen) {
             if (isEdit && editData) {
                 reset({
                     branch: editData.branch,
                     department: editData.department,
-                    documentTypes: editData.documentTypes,
+                    documentTypes: editData.documentTypes.length > 0 ? editData.documentTypes : [''],
                 });
                 setSelectedBranch(editData.branch);
             } else {
@@ -91,7 +110,7 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
         }
     }, [isOpen, isEdit, editData, reset]);
 
-    // ESC key
+    // ESC key to close
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape' && isOpen) onClose();
@@ -104,18 +123,24 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
         setValue('documentTypes', [...watchedDocumentTypes, '']);
     }, [watchedDocumentTypes, setValue]);
 
-    const removeDocumentType = useCallback((index: number) => {
-        if (watchedDocumentTypes.length > 1) {
-            const newTypes = watchedDocumentTypes.filter((_, i) => i !== index);
-            setValue('documentTypes', newTypes);
-        }
-    }, [watchedDocumentTypes, setValue]);
+    const removeDocumentType = useCallback(
+        (index: number) => {
+            if (watchedDocumentTypes.length > 1) {
+                const newTypes = watchedDocumentTypes.filter((_: string, i: number) => i !== index);
+                setValue('documentTypes', newTypes);
+            }
+        },
+        [watchedDocumentTypes, setValue]
+    );
 
-    const updateDocumentType = useCallback((index: number, value: string) => {
-        const newTypes = [...watchedDocumentTypes];
-        newTypes[index] = value;
-        setValue('documentTypes', newTypes);
-    }, [watchedDocumentTypes, setValue]);
+    const updateDocumentType = useCallback(
+        (index: number, value: string) => {
+            const newTypes = [...watchedDocumentTypes];
+            newTypes[index] = value;
+            setValue('documentTypes', newTypes);
+        },
+        [watchedDocumentTypes, setValue]
+    );
 
     const handleFormSubmit = (data: FormData) => {
         onSubmit(data);
@@ -132,9 +157,7 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
                 className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-transparent backdrop-blur-sm"
-                style={{
-                    background: 'rgba(255, 255, 255, 0.15)'
-                }}
+                style={{ background: 'rgba(255, 255, 255, 0.15)' }}
                 onClick={onClose}
             >
                 <motion.div
@@ -155,7 +178,7 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
                             className="p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
                             type="button"
                         >
-                            <X className="w-5 h-5 text-gray-500 cursor-pointer" />
+                            <X className="w-5 h-5 text-gray-500" />
                         </button>
                     </div>
 
@@ -174,7 +197,7 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
                                         onChange={(value) => {
                                             field.onChange(value);
                                             setSelectedBranch(value);
-                                            setValue('department', ''); // Reset department when branch changes
+                                            setValue('department', ''); // Reset department
                                         }}
                                         placeholder="Select a branch"
                                     />
@@ -209,7 +232,7 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
                                 Document Types
                             </label>
                             <div className="space-y-2">
-                                {watchedDocumentTypes.map((type, index) => (
+                                {watchedDocumentTypes.map((type: string, index: number) => (
                                     <div key={index} className="flex items-center gap-2">
                                         <input
                                             type="text"
@@ -238,7 +261,9 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
                                     Add Document Type
                                 </button>
                             </div>
-                            {errors.documentTypes && <p className="mt-1 text-xs text-red-600">{errors.documentTypes.message}</p>}
+                            {errors.documentTypes && (
+                                <p className="mt-1 text-xs text-red-600">{errors.documentTypes.message}</p>
+                            )}
                         </div>
 
                         {/* Buttons */}

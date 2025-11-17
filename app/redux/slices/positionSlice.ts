@@ -1,5 +1,7 @@
 import axiosInstance from '@/app/lib/axiosInstance';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+
+
 
 interface Position {
     _id: string;
@@ -31,10 +33,14 @@ interface PositionState {
     search: string;
 }
 
+
+
 export const fetchPositions = createAsyncThunk(
     'position/fetchPositions',
     async ({ page, limit, search }: { page: number; limit: number; search: string }) => {
-        const response = await axiosInstance.get('/position', { params: { page, limit, search } });
+        const response = await axiosInstance.get('/position', {
+            params: { page, limit, search },
+        });
         return response.data;
     }
 );
@@ -43,7 +49,7 @@ export const createPosition = createAsyncThunk(
     'position/createPosition',
     async (positionData: Omit<Position, '_id' | 'createdAt'>) => {
         const response = await axiosInstance.post('/position', positionData);
-        return response.data;
+        return response.data.position || response.data;
     }
 );
 
@@ -51,7 +57,7 @@ export const updatePosition = createAsyncThunk(
     'position/updatePosition',
     async ({ id, data }: { id: string; data: Partial<Position> }) => {
         const response = await axiosInstance.put(`/position/${id}`, data);
-        return response.data;
+        return response.data.position || response.data;
     }
 );
 
@@ -66,10 +72,14 @@ export const deletePosition = createAsyncThunk(
 export const fetchDepartmentsForDropdown = createAsyncThunk(
     'position/fetchDepartmentsForDropdown',
     async () => {
-        const response = await axiosInstance.get('/department', { params: { page: 1, limit: 1000 } });
-        return response.data.departments;
+        const response = await axiosInstance.get('/department', {
+            params: { page: 1, limit: 1000 },
+        });
+        return response.data.departments || response.data;
     }
 );
+
+
 
 const initialState: PositionState = {
     positions: [],
@@ -80,18 +90,22 @@ const initialState: PositionState = {
     search: '',
 };
 
+
+
+
 const positionSlice = createSlice({
     name: 'position',
     initialState,
     reducers: {
-        setSearch: (state, action) => {
+        setSearch: (state, action: PayloadAction<string>) => {
             state.search = action.payload;
         },
-        setPage: (state, action) => {
+        setPage: (state, action: PayloadAction<number>) => {
             state.pagination.page = action.payload;
         },
-        setLimit: (state, action) => {
+        setLimit: (state, action: PayloadAction<number>) => {
             state.pagination.limit = action.payload;
+            state.pagination.page = 1;
         },
     },
     extraReducers: (builder) => {
@@ -102,15 +116,19 @@ const positionSlice = createSlice({
             })
             .addCase(fetchPositions.fulfilled, (state, action) => {
                 state.loading = false;
-                state.positions = action.payload.positions;
-                state.pagination = action.payload.pagination;
+                state.positions = action.payload.positions || [];
+                state.pagination = {
+                    ...state.pagination,
+                    ...action.payload.pagination,
+                };
             })
             .addCase(fetchPositions.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Failed to fetch positions';
             })
             .addCase(createPosition.fulfilled, (state, action) => {
-                state.positions.push(action.payload);
+                state.positions.unshift(action.payload);
+                state.pagination.total += 1;
             })
             .addCase(updatePosition.fulfilled, (state, action) => {
                 const index = state.positions.findIndex((p) => p._id === action.payload._id);
@@ -118,6 +136,7 @@ const positionSlice = createSlice({
             })
             .addCase(deletePosition.fulfilled, (state, action) => {
                 state.positions = state.positions.filter((p) => p._id !== action.payload);
+                state.pagination.total = Math.max(0, state.pagination.total - 1);
             })
             .addCase(fetchDepartmentsForDropdown.fulfilled, (state, action) => {
                 state.departments = action.payload;
@@ -125,5 +144,9 @@ const positionSlice = createSlice({
     },
 });
 
+
 export const { setSearch, setPage, setLimit } = positionSlice.actions;
+
+export type { Position, Department };
+
 export default positionSlice.reducer;

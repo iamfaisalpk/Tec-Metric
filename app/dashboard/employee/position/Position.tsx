@@ -1,14 +1,26 @@
-// app/dashboard/positions/page.tsx
-
 'use client';
+
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
-import { usePositionCRUD } from './hooks/usePositionCRUD';
 import PositionTable from './components/PositionTable';
 import PositionForm from './components/PositionForm';
 import DeleteModal from '../../common/components/DeleteModal';
+import {
+    fetchPositions,
+    fetchDepartmentsForDropdown,
+    setSearch,
+    setPage,
+    setLimit,
+    createPosition,
+    updatePosition,
+    deletePosition,
+} from '@/app/redux/slices/positionSlice';
+import { AppDispatch, RootState } from '@/app/redux/store';
+import type { Position } from '@/app/redux/slices/positionSlice';
 
 const PositionPage: React.FC = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const {
         positions,
         departments,
@@ -16,33 +28,63 @@ const PositionPage: React.FC = () => {
         error,
         pagination,
         search,
-        editData,
-        isCreateOpen,
-        isEditOpen,
-        isDeleteOpen,
-        openCreateModal,
-        openEditModal,
-        openDeleteModal,
-        closeModals,
-        handleCreate,
-        handleUpdate,
-        handleDelete,
-        handleFetchPositions,
-        handleFetchDepartments,
-        handleSearch,
-        handlePageChange,
-        handleLimitChange,
-    } = usePositionCRUD();
+    } = useSelector((state: RootState) => state.position);
+
+    const [isCreateOpen, setIsCreateOpen] = React.useState(false);
+    const [isEditOpen, setIsEditOpen] = React.useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
+    const [editData, setEditData] = React.useState<Position | null>(null);
 
     useEffect(() => {
-        handleFetchPositions();
-        handleFetchDepartments();
-    }, [handleFetchPositions, handleFetchDepartments]);
+        dispatch(fetchPositions({ page: pagination.page, limit: pagination.limit, search }));
+        dispatch(fetchDepartmentsForDropdown());
+    }, [dispatch, pagination.page, pagination.limit, search]);
+
+    const handleSearch = (term: string) => {
+        dispatch(setSearch(term));
+        dispatch(setPage(1));
+    };
+
+    const openCreateModal = () => setIsCreateOpen(true);
+    const openEditModal = (pos: Position) => {
+        setEditData(pos);
+        setIsEditOpen(true);
+    };
+    const openDeleteModal = (pos: Position) => {
+        setEditData(pos);
+        setIsDeleteOpen(true);
+    };
+    const closeModals = () => {
+        setIsCreateOpen(false);
+        setIsEditOpen(false);
+        setIsDeleteOpen(false);
+        setEditData(null);
+    };
+
+    // Real CRUD handlers (connected to backend!)
+    const handleCreate = async (data: Omit<Position, '_id' | 'createdAt'>) => {
+        await dispatch(createPosition(data));
+        closeModals();
+    };
+
+    const handleUpdate = async (data: Partial<Position>) => {
+        if (editData) {
+            await dispatch(updatePosition({ id: editData._id, data }));
+            closeModals();
+        }
+    };
+
+    const handleDelete = async () => {
+        if (editData) {
+            await dispatch(deletePosition(editData._id));
+            closeModals();
+        }
+    };
 
     return (
         <div className="container mx-auto px-4 py-8">
             {error && (
-                <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
                     {error}
                 </div>
             )}
@@ -54,36 +96,35 @@ const PositionPage: React.FC = () => {
                 pagination={pagination}
                 search={search}
                 onSearch={handleSearch}
-                onPageChange={handlePageChange}
-                onLimitChange={handleLimitChange}
+                onPageChange={(p) => dispatch(setPage(p))}
+                onLimitChange={(l) => dispatch(setLimit(l))}
                 onAdd={openCreateModal}
                 onEdit={openEditModal}
                 onDelete={openDeleteModal}
             />
 
-            {/* PASS `positions` TO FORM */}
             <AnimatePresence mode="wait">
                 {isCreateOpen && (
                     <PositionForm
-                        key="create-form"
+                        key="create"
                         isOpen={isCreateOpen}
                         onClose={closeModals}
                         onSubmit={handleCreate}
                         isEdit={false}
                         departments={departments}
-                        positions={positions}  // ← ADD THIS
+                        positions={positions}
                     />
                 )}
-                {isEditOpen && (
+                {isEditOpen && editData && (
                     <PositionForm
-                        key="edit-form"
+                        key="edit"
                         isOpen={isEditOpen}
                         onClose={closeModals}
                         onSubmit={handleUpdate}
                         editData={editData}
                         isEdit={true}
                         departments={departments}
-                        positions={positions}  // ← ADD THIS
+                        positions={positions}
                     />
                 )}
             </AnimatePresence>
@@ -91,7 +132,7 @@ const PositionPage: React.FC = () => {
             <DeleteModal
                 isOpen={isDeleteOpen}
                 title="Delete Position"
-                message={`Are you sure you want to delete the position "${editData?.name}"? This action cannot be undone.`}
+                message={`Are you sure you want to delete "${editData?.name}"? This action cannot be undone.`}
                 onConfirm={handleDelete}
                 onCancel={closeModals}
             />
