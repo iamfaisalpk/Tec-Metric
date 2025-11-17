@@ -37,9 +37,9 @@ export const DocumentRow: React.FC<DocumentRowProps> = ({
                 <input
                     type="file"
                     onChange={e => update(idx, 'file', e.target.files?.[0] ?? null)}
-                    className="flex-1 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-primary file:text-white"
+                    className="flex-1 cursor-pointer file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-primary file:text-white"
                 />
-                {doc.file && <span className="text-sm text-gray-600">{doc.file.name}</span>}
+                {doc.file && <span className="text-sm text-gray-600 cursor-pointer">{doc.file.name}</span>}
             </div>
         </FormField>
 
@@ -59,7 +59,7 @@ export const DocumentRow: React.FC<DocumentRowProps> = ({
             <button
                 type="button"
                 onClick={() => remove(idx)}
-                className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition flex items-center gap-1"
+                className="px-4 py-2 cursor-pointer bg-red-500 text-white rounded-full hover:bg-red-600 transition flex items-center gap-1"
             >
                 <Trash2 className="w-4 h-4" />
                 Remove
