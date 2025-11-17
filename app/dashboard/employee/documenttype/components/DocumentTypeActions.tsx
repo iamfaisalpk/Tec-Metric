@@ -23,12 +23,12 @@ const DocumentTypeActions: React.FC<DocumentTypeActionsProps> = ({ onAdd }) => {
                 className="flex flex-col items-center gap-2"
             >
                 {/* Blue Rounded Icon Box */}
-                <div className="bg-blue-600 text-white w-20 h-20 rounded-3xl flex items-center justify-center shadow-md">
+                <div className="bg-primary cursor-pointer text-white w-20 h-20 rounded-3xl flex items-center justify-center shadow-md">
                     <Layers2Icon className="w-8 h-8" />
                 </div>
 
                 {/* Text */}
-                <span className="text-blue-600 font-semibold text-sm">
+                <span className="text-primary font-semibold text-sm">
                     Add Document
                 </span>
             </motion.button>

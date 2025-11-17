@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { X, Plus, Building2, FileText, Check, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect,  useCallback } from 'react';
+import { X, Plus, FileText, } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -152,7 +152,7 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
                         </h3>
                         <button
                             onClick={onClose}
-                            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                            className="p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
                             type="button"
                         >
                             <X className="w-5 h-5 text-gray-500 cursor-pointer" />
@@ -232,7 +232,7 @@ const DocumentTypeForm: React.FC<DocumentTypeFormProps> = ({
                                 <button
                                     type="button"
                                     onClick={addDocumentType}
-                                    className="flex items-center gap-2 px-4 py-2 text-primary hover:text-primary/80 transition-colors"
+                                    className="flex items-center gap-2 px-4 py-2 cursor-pointer text-primary hover:text-primary/80 transition-colors"
                                 >
                                     <Plus className="w-4 h-4" />
                                     Add Document Type

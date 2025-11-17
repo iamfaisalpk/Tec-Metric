@@ -84,7 +84,7 @@ const PositionTable: React.FC<PositionTableProps> = ({
                 <div className="flex flex-col items-center">
                     <button
                         onClick={onAdd}
-                        className="flex flex-col items-center gap-1 px-4 py-5 bg-primary text-white rounded-3xl font-medium hover:bg-blue-700 transition-colors shadow-lg"
+                        className="flex flex-col cursor-pointer items-center gap-1 px-4 py-5 bg-primary text-white rounded-3xl font-medium hover:bg-blue-700 transition-colors shadow-lg"
                         title="Add Position"
                     >
                         <Briefcase className="w-8 h-8" />

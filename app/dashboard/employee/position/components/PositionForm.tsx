@@ -124,7 +124,7 @@ const PositionForm: React.FC<PositionFormProps> = ({
                         <h3 className="text-xl font-semibold text-gray-900">
                             {isEdit ? 'Edit Position' : 'Add Position'}
                         </h3>
-                        <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100">
+                        <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
                             <X className="w-5 h-5 text-gray-500" />
                         </button>
                     </div>
@@ -153,7 +153,7 @@ const PositionForm: React.FC<PositionFormProps> = ({
                                     placeholder="Enter position name"
                                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
                                 />
-                                <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600">
+                                <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600 cursor-pointer">
                                     <Plus className="w-5 h-5" />
                                 </button>
                             </div>
@@ -186,10 +186,10 @@ const PositionForm: React.FC<PositionFormProps> = ({
                     </div>
 
                     <div className="flex justify-end gap-3 px-6 pb-6">
-                        <button onClick={onClose} className="px-6 py-3 text-gray-700 font-medium bg-gray-100 rounded-full hover:bg-gray-200">
+                        <button onClick={onClose} className="px-6 py-3 cursor-pointer text-gray-700 font-medium bg-gray-100 rounded-full hover:bg-gray-200">
                             Cancel
                         </button>
-                        <button onClick={handleSubmit} className="px-6 py-3 bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 shadow-md">
+                        <button onClick={handleSubmit} className="px-6 py-3 cursor-pointer bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 shadow-md">
                             {isEdit ? 'Update' : 'Add'}
                         </button>
                     </div>
