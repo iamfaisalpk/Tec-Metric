@@ -3,7 +3,7 @@ import axios from 'axios';
 // Create axios instance with base configuration
 const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
-    withCredentials: true, // Enable cookies for cross-origin requests
+    withCredentials: true,
 });
 
 // Request interceptor to add Authorization header if token exists

@@ -1,7 +1,9 @@
+import Device from "./Device";
+
 const page = () => {
     return (
         <div>
-            Enter
+            <Device />
         </div>
     );
 }

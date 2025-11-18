@@ -9,6 +9,7 @@ import departmentSlice from './slices/departmentSlice'
 import positionSlice from './slices/positionSlice'
 import documentTypeSlice from './slices/documentTypeSlice'
 import branchSlice from './slices/branchSlice'
+import deviceSlice from './slices/deviceSlice'
 
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
         department: departmentSlice,
         position: positionSlice,
         documentType: documentTypeSlice,
+        device: deviceSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
