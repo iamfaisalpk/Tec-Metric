@@ -32,3 +32,30 @@ body {
     background-color: var(--color-primary);
     border-radius: 20px;
 }
+
+
+
+.PhoneInput input {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    font-size: 15px;
+    padding: 0 !important;
+}
+
+/* Country selector spacing */
+.PhoneInputCountry {
+    margin-right: 12px;
+}
+
+/* Dropdown country list clean style */
+.PhoneInputCountrySelect {
+    border-radius: 8px !important;
+    background-color: #fff !important;
+}
+
+/* Flag style */
+.PhoneInputCountryIcon--square {
+    border-radius: 6px !important;
+}
