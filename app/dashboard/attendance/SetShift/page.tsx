@@ -1,9 +1,9 @@
-import SetBreakTime from "./SetBreakTime/SetBreakTime";
+import SetShift from "./SetShift";
 
 const page = () => {
     return (
         <div>
-            <SetBreakTime/>
+            <SetShift/>
         </div>
     );
 }

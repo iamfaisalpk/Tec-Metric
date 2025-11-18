@@ -1,9 +1,9 @@
-import SetBreakTime from "./SetBreakTime/SetBreakTime";
+import SetTimetable from "./SetTimetable";
 
 const page = () => {
     return (
         <div>
-            <SetBreakTime/>
+            <SetTimetable/>
         </div>
     );
 }

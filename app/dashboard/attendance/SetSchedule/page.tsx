@@ -1,9 +1,9 @@
-import SetBreakTime from "./SetBreakTime/SetBreakTime";
+import SetSchedule from "./SetSchedule";
 
 const page = () => {
     return (
         <div>
-            <SetBreakTime/>
+            <SetSchedule/>
         </div>
     );
 }
