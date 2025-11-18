@@ -1,5 +1,6 @@
 import SetTimetable from "./SetTimetable";
 
+
 const page = () => {
     return (
         <div>

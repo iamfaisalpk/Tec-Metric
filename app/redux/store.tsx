@@ -10,6 +10,7 @@ import positionSlice from './slices/positionSlice'
 import documentTypeSlice from './slices/documentTypeSlice'
 import branchSlice from './slices/branchSlice'
 import deviceSlice from './slices/deviceSlice'
+import breakTimeSlice from './slices/breakTimeSlice'
 
 
 export const store = configureStore({
@@ -22,6 +23,7 @@ export const store = configureStore({
         position: positionSlice,
         documentType: documentTypeSlice,
         device: deviceSlice,
+        break : breakTimeSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

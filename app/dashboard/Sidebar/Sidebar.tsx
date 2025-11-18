@@ -90,11 +90,11 @@ export default function Sidebar() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 animate={{
-                    width: isExpanded ? '16rem' : '5rem', // 256px ↔ 80px
+                    width: isExpanded ? '16rem' : '5rem',
                 }}
                 transition={{
-                    duration: 0.22,              // Faster animation
-                    ease: [0.32, 0, 0, 1],       // Super smooth & modern easing
+                    duration: 0.22,
+                    ease: [0.32, 0, 0, 1],
                 }}
                 className="hidden lg:flex fixed lg:sticky top-0 h-screen z-40 bg-white border-r border-gray-100 flex-col"
             >
@@ -102,7 +102,7 @@ export default function Sidebar() {
                 <div className="pt-6 pb-8 flex justify-center">
                     <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
                         <Image
-                            src="/Techon.png"
+                            src="/Tecon.png"
                             alt="TecTrack Logo"
                             width={48}
                             height={48}
